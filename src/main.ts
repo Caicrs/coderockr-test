@@ -17,6 +17,8 @@ async function bootstrap() {
     .setTitle('Coderockr-test')
     .setDescription('Investment app')
     .setVersion('1.0.0')
+    .addTag('auth')
+    .addTag('user')
     .addBearerAuth()
     .build();
 
