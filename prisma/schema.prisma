@@ -23,7 +23,7 @@ model User {
 model Investments {
   id             String           @id @default(uuid())
   title          String
-  duration       String
+  monthDuration  Int
   gain           Float
   InvestmentList InvestmentList[]
 }
@@ -33,6 +33,7 @@ model InvestmentList {
   startDate    DateTime
   endDate      DateTime
   amount       Float
+  active       Boolean
   investment   Investments @relation(fields: [investmentId], references: [id])
   investmentId String
   owner        User        @relation(fields: [ownerId], references: [id])
