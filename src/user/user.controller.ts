@@ -2,22 +2,11 @@ import {
   Controller,
   Get,
   Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  HttpCode,
-  HttpStatus,
-  UseGuards,
-  Req,
-  ForbiddenException,
+  Body
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
-import { LoggedUser } from 'src/auth/logged-user-decorator';
-import { User } from '@prisma/client';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('user')
 @Controller('user')
@@ -34,14 +23,4 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get('/investments')
-  @UseGuards(AuthGuard())
-  @ApiBearerAuth()
-  @ApiOperation({
-    summary: 'List all the investments maded by this logged user',
-  })
-  findAll(@LoggedUser() user: User) {
-    return user
-    // return this.userService.findAll();
-  }
 }
