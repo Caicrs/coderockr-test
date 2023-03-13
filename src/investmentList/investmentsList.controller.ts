@@ -19,6 +19,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { LoggedUser } from 'src/auth/logged-user-decorator';
 import { User } from '@prisma/client';
 import millisecondsConverter from './helper/dateLogic';
+import { CreateWithdrawalDto } from './dto/create-withdrawal.dto';
 
 @ApiTags('manage')
 @Controller('manage')
@@ -57,9 +58,9 @@ export class InvestmentListController {
           // Update investmentList for ( active:false )
           const data = {
             id: item.id,
-            message: 'Investment finished'
-          }
-          arr.push(data)
+            message: 'Investment finished',
+          };
+          arr.push(data);
         } else {
           for (let i = 0; i < resultDate.month; i++) {
             currentBalance = currentBalance + (0.52 * currentBalance) / 100;
@@ -80,5 +81,22 @@ export class InvestmentListController {
       }
     });
     return arr;
+  }
+
+  @Post('/withdrawal')
+  @UseGuards(AuthGuard())
+  @ApiOperation({
+    summary: 'Make investment',
+  })
+  @ApiBearerAuth()
+  async createWithdrawal(@Body() createWithdrawalDto: CreateWithdrawalDto) {
+    const data = {
+      amount: createWithdrawalDto.amount,
+      active: false,
+    };
+    return this.investmentService.update(
+      createWithdrawalDto.investmentId,
+      data,
+    );
   }
 }
