@@ -32,13 +32,13 @@
 $ yarn install
 ```
 
-## Running the app
-
 ## Start database
 
     1. npx prisma format
     2. npx prisma generate
     3. npx prisma db push
+
+## Running the app
 
 ```bash
 # development
